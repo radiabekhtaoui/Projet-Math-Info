@@ -40,7 +40,7 @@ $$a_{k}= l_{k} v_{k−1} \Rightarrow l_{k} = a_{k}/v_{k−1}$$
 
 $$b_{k} = l_{k} c_{k−1} + v_{k} \Rightarrow v_{k} = b_{k} − l_{k} c_{k−1}, \hspace{10pt} k = 2,\cdots, n $$
 
-Le module LU est implémenté suivant cet algorithme.
+**Le module LU **est implémenté suivant cet algorithme.
 
 ### Resolution du system Ax = b (la methode utilisée pour implémenter le module resoudre):
 ##### On commence par resoudre Ly = b:
@@ -54,3 +54,5 @@ Methode de remontée:
 $$v_{n}x_{n} = yn \Rightarrow x_{n} = y_{n} / v_{n} $$
 
 $$v_{k}x_{k} + c_{k}x_{k+1} = y_{k} \Rightarrow x_{k} = (y_{k} − c_{k}x_{k+1})/v_{k}, \hspace{10pt} k = n − 1,\cdots , 1$$
+
+**Le module resoudre** est implémenté suivant ces methodes.
