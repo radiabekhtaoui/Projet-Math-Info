@@ -1,7 +1,10 @@
-#include<stdlib.h>
-#include<stdio.h>
+#include "afficher.h"
+#include "LU.h"
+#include "resoudre.h"
+#include "multiplication.h"
+#include "test.h"
 
-#define N 6
+#define N 4
 
 void decompLU(double **a,double **l,double **u,int n){
    
@@ -29,22 +32,7 @@ void decompLU(double **a,double **l,double **u,int n){
         u[i-1][i]=a[i-1][i];
     }
 }
-void printMat(double **a,int n) {
-  int i,j;
 
-  for(i=0;i<n;i++) {
-    for(j=0;j<n;j++) {
-        printf("%0.2lf \t",a[i][j]);
-    };
-    printf("\n");
-  }
-}
-void printVect(double *x,int n){
-    for(int i=0;i<n;i++) {
-        printf("%lf \t",x[i]);
-    }
-    printf("\n");
-}
 double  *resoudres(double **l,double **u,double *b,int n) {
     double *y,*x;
     
@@ -62,6 +50,68 @@ double  *resoudres(double **l,double **u,double *b,int n) {
 
     return x;
 }
+double **multMat(double **a, double **b,int n){
+   
+    double **c;
+    c = (double**)malloc(n*sizeof(double*));
+        for(int i=0;i<n;i++) {
+            c[i] = (double*)malloc(n*sizeof(double));
+        }
+
+    for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                c[i][j] = 0;
+                for (int k = 0; k < n; k++) {
+                    c[i][j] += a[i][k] * b[k][j];
+                }
+            }           
+    }
+    return c;
+}
+double *multMatVect(double **a, double *v,int n){
+    double *c;
+    c = (double*)malloc(n*sizeof(double));
+
+    for(int i=0;i<n;i++) {
+        c[i] = 0;
+        for(int j=0;j<n;j++) {
+            c[i] += a[i][j]*v[j];
+        }
+    }
+    return c;
+}
+int EgaliteTestMat(double **a, double **b,int n){
+    for (int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            if(a[i][j]!= b[i][j]) return 0;//a!=b
+        }
+    }
+    return 1;//a==b
+}
+int EgaliteTestvect(double *a, double *b,int n){
+    for (int i = 0; i < n; i++) {
+        if(a[i]!= b[i]) return 0;//a!=b
+    }
+    return 1;//a==b
+}
+//afficher une matrice
+void printMat(double **a,int n) {
+  int i,j;
+
+  for(i=0;i<n;i++) {
+    for(j=0;j<n;j++) {
+        printf("%0.2lf \t",a[i][j]);
+    };
+    printf("\n");
+  }
+}
+void printVect(double *x,int n){
+    for(int i=0;i<n;i++) {
+        printf("%0.2lf \t",x[i]);
+    }
+    printf("\n");
+}
+
 
 int main(){
     double **a, **l, **u, *b ,*x;
@@ -71,6 +121,13 @@ int main(){
         for(i=0;i<N;i++) {
             a[i] = (double*)malloc(N*sizeof(double));
         }
+    
+  for(i=1;i<N;i++) {
+    a[i-1][i]=-1;
+    a[i][i-1]=-1;
+    a[i-1][i-1]=2;
+    a[N-1][N-1]=2;
+  }
 
     l = (double**)malloc(N*sizeof(double*));
         for(i=0;i<N;i++) {
@@ -82,28 +139,41 @@ int main(){
             u[i] = (double*)malloc(N*sizeof(double));
         }
     b= (double*)malloc(sizeof(double)*N);
-
-  for(i=1;i<N;i++) {
-    a[i-1][i]=-1;
-    a[i][i-1]=-1;
-    a[i-1][i-1]=2;
-    a[N-1][N-1]=2;
-  }
-
-  for (i=0;i<N;i++){
-    b[i]=1;
-  }
-
+  
   printf("Matrice A :\n");
   printMat(a,N);
+  
+  //LU TRIDIAGGONALE
   decompLU(a,l,u,N);
+  
+  //test unitaire de la decomposition LU
+  if(!EgaliteTestMat(multMat(l,u,N),a,N)){
+    printf("Erreur lors de la decomposition LU : A != L*U\n");
+    return EXIT_FAILURE;
+  }
+
   printf("Matrice L :\n");
   printMat(l,N);
   printf("Matrice U :\n");
   printMat(u,N);
+  //definir b:
+  for (i=0;i<N;i++){
+    b[i]=1*i;
+  }
+  printf("b:\n");
+  printVect(b,N);
+  
+  //resoudre le systeme:
   x=resoudres(l,u,b,N);
+
+  //test unitaire de la solution :
+  if(!EgaliteTestvect(multMatVect(a,x,N),b,N)){
+    printf("Erreur de solution : AX!= B\n");
+    return EXIT_FAILURE;
+  }
+  
   printf("solution x:\n");
   printVect(x,N);
-
+  
   return 0;
 }
