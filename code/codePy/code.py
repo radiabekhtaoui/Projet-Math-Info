@@ -1,10 +1,10 @@
-n=8
-import LU
+n = 8
+import LU_t
 import Resolution
 import Multiplication
+import test
+import  math
 
-L = [[0 for i in range(n)] for j in range(n)]
-U = [[0 for i in range(n)] for j in range(n)]
 A = [[0 for i in range(n)] for j in range(n)]
 for i in range(1,n):
         A[i-1][i] = -1
@@ -12,13 +12,13 @@ for i in range(1,n):
         A[i][i-1] = -1
         A[n-1][n-1] = 2
 
-LU.Decomposition(A, L, U, n)
+L , U = LU_t.Decomposition(A, n)
 print("Matrice A:")
-LU.afficher_Mat(A)
+LU_t.afficher_Mat(A)
 print("Matrice L:")
-LU.afficher_Mat(L)
+LU_t.afficher_Mat(L)
 print("Matrice U:")
-LU.afficher_Mat(U)
+LU_t.afficher_Mat(U)
 
 b = [1 for i in range(n)]
 y = Resolution.Sol_y(L,b,n)
@@ -26,6 +26,16 @@ u = Resolution.Sol_u(U,y,n)
 print("La solution du système est u:")
 print(u)
 
+B = Multiplication.produitmat_mat(L,U,8)
+assert test.Test_matrice(A,B,8) == True
 
-assert A==Multiplication.produitmat_mat(L, U, 8)
 ax = Multiplication.produitmat_vect(A,u,8)
+assert test.Test_vect(ax,b,8) == True
+
+
+
+    
+
+        
+
+

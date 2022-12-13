@@ -1,15 +1,27 @@
-def Decomposition(A : list[list[float]], L : list[list[float]], U : list[list[float]], n : int ) :
-    U[0][0] = A[0][0]
-    for i in range(1,n):
-        L[i][i-1]= A[i][i-1] / U[i-1] [i-1]
-        U[i][i] = A[i][i] - L[i][i-1] * A[i-1][i]
-    
-    for i in range(n):
-        L[i][i] = 1
-    
-    for i in range(1,n):
-        U[i-1][i] = A[i-1][i]
+def LU_decomposition(A:list[list[float]],n : int):
+    L = [[0 for i in range(n)]for j in range(n)]
+    U = [[0 for i in range(n)]for j in range(n)]
+    for j in range(n):
+        L[j][j] = 1
+        for i in range(j+1):
+            s1 = sum(U[k][j] * L[i][k] for k in range(i))
+            U[i][j] = A[i][j] - s1
+        for i in range(j, n):
+            s2 = sum(U[k][j] * L[i][k] for k in range(j))
+            L[i][j] = (A[i][j] - s2) / U[j][j]
 
-def afficher_Mat(a):
-    for i in a:
-        print(i) 
+    return L, U
+
+n =8
+
+A = [[0 for i in range(n)] for j in range(n)]
+for i in range(1,n):
+        A[i-1][i] = -1
+        A[i-1][i-1] = 2
+        A[i][i-1] = -1
+        A[n-1][n-1] = 2
+L,U = LU_decomposition(A,n)
+print("La matrice L")
+print(L)
+print("La matrice U")
+print(U)
