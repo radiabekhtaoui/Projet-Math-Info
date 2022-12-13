@@ -1,10 +1,10 @@
-#include "afficher.h"
-#include "LU.h"
-#include "resoudre.h"
-#include "multiplication.h"
-#include "test.h"
+#include "include/afficher.h"
+#include "include/LU.h"
+#include "include/resoudre.h"
+#include "include/multiplication.h"
+#include "include/test.h"
 
-#define N 8
+#define N 30
 
 int main(){
     double **a, **l, **u, *b ,*x, *m;
