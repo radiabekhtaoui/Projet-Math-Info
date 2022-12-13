@@ -8,7 +8,7 @@
 #define N 3
 
 int main(){
-    double **a, **l, **u, *b ,*x, *m;
+    double **a, **l, **u, *b ,*x;
     int i;
 
     a = (double**)malloc(N*sizeof(double*));
