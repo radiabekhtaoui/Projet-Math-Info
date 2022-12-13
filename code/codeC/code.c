@@ -1,19 +1,25 @@
 #include "include/afficher.h"
-#include "include/LU.h"
+#include "include/lu.h"
+#include "include/lu_tridiagonal.h"
 #include "include/resoudre.h"
 #include "include/multiplication.h"
 #include "include/test.h"
 
-#define N 30
+#define N 3
 
 int main(){
     double **a, **l, **u, *b ,*x, *m;
     int i;
 
     a = (double**)malloc(N*sizeof(double*));
+    l = (double**)malloc(N*sizeof(double*));
+    u = (double**)malloc(N*sizeof(double*));
         for(i=0;i<N;i++) {
             a[i] = (double*)malloc(N*sizeof(double));
+            l[i] = (double*)malloc(N*sizeof(double));
+            u[i] = (double*)malloc(N*sizeof(double));
         }
+    b= (double*)malloc(sizeof(double)*N);
   //definir A 
   for(i=1;i<N;i++) {
     a[i-1][i]=-1;
@@ -21,23 +27,15 @@ int main(){
     a[i-1][i-1]=2;
     a[N-1][N-1]=2;
   }
+  
   printf("Matrice A :\n");
   printMat(a,N);
-  
-    l = (double**)malloc(N*sizeof(double*));
-        for(i=0;i<N;i++) {
-            l[i] = (double*)malloc(N*sizeof(double));
-        }  
 
-    u = (double**)malloc(N*sizeof(double*));
-        for(i=0;i<N;i++) {
-            u[i] = (double*)malloc(N*sizeof(double));
-        }
-    
-    b= (double*)malloc(sizeof(double)*N);
+  //LU 
+  //decompLU(a,l,u,N);
   
   //LU TRIDIAGGONALE
-  decompLU(a,l,u,N);
+  decompLU_Tridiag(a,l,u,N);
   
   //test unitaire de la decomposition LU
   if(!EgaliteTestMat(multMat(l,u,N),a,N)){
