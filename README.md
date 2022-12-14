@@ -1,4 +1,3 @@
-<<<<<<< LU_C_RB
 # Projet-Math-Info
 $$
 \left(\begin{array}{cc} 
