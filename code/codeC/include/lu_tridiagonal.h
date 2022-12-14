@@ -1,10 +1,10 @@
-#ifndef LU_H
-#define LU_H
+#ifndef LU_TRIDIAGONAL_H
+#define LU_TRIDIAGONAL_H
 
 #include<stdlib.h>
 
 
-void decompLU(double **a,double **l,double **u,int n){
+void decompLU_Tridiag(double **a,double **l,double **u,int n){
    
     u[0][0]=a[0][0];
 
