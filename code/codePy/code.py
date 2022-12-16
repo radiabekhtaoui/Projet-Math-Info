@@ -1,4 +1,5 @@
 n = 8
+h = 1
 import LU_t
 import Resolution
 import Multiplication
@@ -7,12 +8,12 @@ import  math
 
 A = [[0 for i in range(n)] for j in range(n)]
 for i in range(1,n):
-        A[i-1][i] = -1
-        A[i-1][i-1] = 2
-        A[i][i-1] = -1
-        A[n-1][n-1] = 2
+        A[i-1][i] = 1 // h**2
+        A[i-1][i-1] = -2 // h**2
+        A[i][i-1] = 1 // h**2
+        A[n-1][n-1] = -2 // h**2
 
-L , U = LU_t.Decomposition(A, n)
+L , U = LU_t.Decomposition(A, n , h)
 print("Matrice A:")
 LU_t.afficher_Mat(A)
 print("Matrice L:")
