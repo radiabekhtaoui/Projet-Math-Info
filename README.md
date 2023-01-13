@@ -1,6 +1,24 @@
 # Documentation 
+## Documentation des codes :
+### Code en C :
+Le fichier **main.c** fait la résolution du système linéaire: $$A_{h} u_{h} = b_{h}$$
 
-### Factorisation LU d'une matrice tri-diagonale (la methode utilisée pour implémenter le module LU)
+Les fichiers source du dossier **src** contiennent les fonctions de la factorisation LU ainsi que la resolution du systéme , l'initialisation du vecteur B et la fonction s.
+Ceci se fait dans le fichier **functions.c**. le fichier **utiles.c** contient les fonctions secondaires comme l'affichage et les tests.
+
+Le dossier **include** quand à lui permet d'inclure le contenu des fichiers sources au main. on y retrouve les signatures des fonctions de chaque fichier source.
+
+Le fichier **LU_efficace.c** est un programme qui compare entre la methode LU classique et la tri-diagonale, Ceci est independant du main pour le compiler et l'executer il faut donc tapez les lignes de commande **gcc Lu_efficace** et **./a.out**.
+
+Le **makefile** permet d'executer le programe tapez :
+- **make** pour compiler (generer les objets executable ).
++ **./main** pour executer et voir le resultat.
+* **make** clean pour supprimer les objets executable.
+
+
+### Code en Python :
+## Methodes numeriques :
+### Factorisation LU d'une matrice tri-diagonale.
 
 Soit la matrice A sous la forme tri-diagonale suivante:
 
@@ -42,7 +60,7 @@ $$b_{k} = l_{k} c_{k−1} + v_{k} \Rightarrow v_{k} = b_{k} − l_{k} c_{k−1},
 
 **Le module LU **est implémenté suivant cet algorithme.
 
-### Resolution du system Ax = b (la methode utilisée pour implémenter le module resoudre):
+### Resolution du system Ax = b :
 ##### On commence par resoudre Ly = b:
 Methode de descente:
 $$y_{1} = b_{1}$$
@@ -55,4 +73,3 @@ $$v_{n}x_{n} = yn \Rightarrow x_{n} = y_{n} / v_{n} $$
 
 $$v_{k}x_{k} + c_{k}x_{k+1} = y_{k} \Rightarrow x_{k} = (y_{k} − c_{k}x_{k+1})/v_{k}, \hspace{10pt} k = n − 1,\cdots , 1$$
 
-**Le module resoudre** est implémenté suivant ces methodes.
