@@ -16,8 +16,8 @@ for i in range(1,n):
 nbrepet = 1
 fexp = "{:7.3e}"
 t_time = [] 
+
 for repet in range(nbrepet): 
-   
     t0 = time.perf_counter()
     r = LU.LU_decomposition(A,20,h)
     t = time.perf_counter()
@@ -29,6 +29,7 @@ for repet in range(nbrepet):
 nbrepet = 1
 fexp = "{:7.3e}"
 t_time1 = [] 
+
 for repet in range(nbrepet): 
     t0 = time.perf_counter()
     r = LU_t.Decomposition(A, 20,h)

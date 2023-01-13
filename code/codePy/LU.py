@@ -1,3 +1,5 @@
+#fonction pour faire la decomposition LU
+
 def LU_decomposition(A:list[list[float]],n : int, h : int):
     L = [[0 for i in range(n)]for j in range(n)]
     U = [[0 for i in range(n)]for j in range(n)]

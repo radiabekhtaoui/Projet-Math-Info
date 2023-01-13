@@ -1,3 +1,5 @@
+#fonction pour resoudre le système 
+
 def Sol_y(L : list[list[float]] , b : list[float], n:int) -> list[float] :
     
     y = [0 for i in range (n)]
