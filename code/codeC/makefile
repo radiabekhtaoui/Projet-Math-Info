@@ -1,8 +1,24 @@
-output: code.o
-	gcc code.o -o output -lm
+CC = gcc
+EXC = main
+OBJDIR = obj
+SRCDIR = src
+SRC = $(wildcard $(SRCDIR)/*.c)
+OBJ = $(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
-code.o:code.c
-	gcc -c code.c -lm
+all: $(EXC)
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) -o $@ -c $< -lm
+ 
+$(OBJDIR)/main.o: main.c
+	$(CC) -o $@ -c $< -lm
+
+$(EXC): $(OBJ) $(OBJDIR)/main.o
+	echo "Compilation avec succes !, Pour executer tapez $(EXC)"
+	$(CC) -o $@ $^ -lm
+	echo "Pour executer LU_efficace.c, faut le faire avec la commande gcc !"
 
 clean:
-	rm *.o output
+	rm -rf $(OBJDIR)/*.o $(EXC)
+
+.PHONY: clean all

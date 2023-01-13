@@ -1,9 +1,5 @@
-#include "include/afficher.h"
-#include "include/lu.h"
-#include "include/lu_tridiagonal.h"
-#include "include/resoudre.h"
-#include "include/multiplication.h"
-#include "include/test.h"
+#include "./include/functions.h"
+#include "./include/utiles.h"
 
 // parametres de discretisation
 #define N  5   // nombre de points de discretisation
@@ -11,25 +7,9 @@
 // conditions de Dirichlet
 #define ALPHA 0  //condition limite u(O)
 #define BETA 0  // condition limite u(1)
-// fonction à resoudre ici j'ai choisit s(x)= 4π²sin(2πx)
-double s(double x) {
-    return 4 * M_PI * M_PI * sin(2 * M_PI * x);
-}
-//fonction maillage 
-double *maillage(int n)
-{ 
-    // Créer un tableau pour stocker les points du maillage
-    double *x = malloc(n+2 * sizeof(double));
 
-    for (int i = 0; i <= n+1; i++)
-    {
-        x[i] =i * H;
-    }
-
-    return x;
-}
 int main(){
-    double **a, **l, **u, *b ,*m,*x;
+    double **a, **l, **u, *B ,*x,*xi;
     int i;
 
     a = (double**)malloc(N*sizeof(double*));
@@ -40,7 +20,9 @@ int main(){
             l[i] = (double*)malloc(N*sizeof(double));
             u[i] = (double*)malloc(N*sizeof(double));
         }
-    b= (double*)malloc(sizeof(double)*N);
+    B= (double*)malloc(N*sizeof(double));
+    xi = (double*)malloc(sizeof(double)*N);
+  
   //definir A 
   for(i=1;i<N;i++) {
     a[i-1][i]=-1/(H*H);
@@ -66,32 +48,25 @@ int main(){
 
   printf("Matrice L :\n");
   printMat(l,N);
+ 
   printf("Matrice U :\n");
   printMat(u,N);
   
-  /*calcul des valeurs de b sur chaque point de discretisation
-  m = maillage(N);
-  definir b:
-  b[0]= s(x[1])+(ALPHA/(H*H));
-  b[N-1]= s(x[N-1])+(BETA/(H*H));
-  for (int i = 1; i < N-1; i++){
-      b[i]=s(x[i]);
-  }
+  maillage(xi,N);
+  createB(B,xi);
   
-  printf("b:\n");
-  printVect(b,N);*/
+  printf("Matrice B :\n");
+  printVect(B,N);
   
-  for (i=0;i<N;i++){
-    b[i]=1;
-  }
   //resoudre le systeme:
-  x=resoudres(l,u,b,N);
+  x=resoudres(l,u,B,N);
   
   //test unitaire de la solution :
-  if(!EgaliteTestvect(multMatVect(a,x,N),b,N)){
+  if(!EgaliteTestvect(multMatVect(a,x,N),B,N)){
     printf("Erreur de solution : AX!= B\n");
     return EXIT_FAILURE;
   }
+  
   printf("solution X:\n");
   printVect(x,N);
 
