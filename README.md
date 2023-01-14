@@ -58,8 +58,6 @@ $$a_{k}= l_{k} v_{k−1} \Rightarrow l_{k} = a_{k}/v_{k−1}$$
 
 $$b_{k} = l_{k} c_{k−1} + v_{k} \Rightarrow v_{k} = b_{k} − l_{k} c_{k−1}, \hspace{10pt} k = 2,\cdots, n $$
 
-**Le module LU **est implémenté suivant cet algorithme.
-
 ### Resolution du system Ax = b :
 ##### On commence par resoudre Ly = b:
 Methode de descente:
@@ -72,4 +70,28 @@ Methode de remontée:
 $$v_{n}x_{n} = yn \Rightarrow x_{n} = y_{n} / v_{n} $$
 
 $$v_{k}x_{k} + c_{k}x_{k+1} = y_{k} \Rightarrow x_{k} = (y_{k} − c_{k}x_{k+1})/v_{k}, \hspace{10pt} k = n − 1,\cdots , 1$$
+
+### Le Système linéaire sous la forme matricielle:
+L'équation discrétisée est: $$u''(x_i) ≈ u(x_i-1) - 2u(x_i) + u(x_i+1)$$
+
+La formulation matricielle :
+
+$$\frac{1}{h²}
+\left(\begin{array}{cc} 
+2 & -1 & 0 & \cdots &0\\ 
+-1 & 2 & -1& \ddots & \vdots \\ 
+\vdots  & \ddots  & \ddots  & \ddots & \vdots   \\
+0 & 0 & -1 & 2& -1 \\ 
+0 & 0 & 0 & -1 & 2\\ 
+\end{array}\right)
+\left(\begin{array}{cc} 
+f(x_{1})+ \frac{\alpha}{\h^2}$\\
+-1 \\ 
+\vdots \\
+0 \\ 
+0 \\ 
+\end{array}\right)=
+
+$$
+
 
