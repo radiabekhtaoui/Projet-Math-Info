@@ -72,9 +72,11 @@ $$v_{n}x_{n} = yn \Rightarrow x_{n} = y_{n} / v_{n} $$
 $$v_{k}x_{k} + c_{k}x_{k+1} = y_{k} \Rightarrow x_{k} = (y_{k} − c_{k}x_{k+1})/v_{k}, \hspace{10pt} k = n − 1,\cdots , 1$$
 
 ### Le Système linéaire sous la forme matricielle:
-L'équation discrétisée est: $$u''(x_i) ≈ u(x_i-1) - 2u(x_i) + u(x_i+1)$$
+L'équation discrétisée est: $$u''(x_i) ≈ \frac{u(x_{i-1}) - 2u(x_i) + u(x_{i+1})}{h^2}$$
 
-La formulation matricielle :
+
+La formulation matricielle :\
+$A_{h}$ est sous la forme :
 
 $$\frac{1}{h²}
 \left(\begin{array}{cc} 
@@ -84,14 +86,27 @@ $$\frac{1}{h²}
 0 & 0 & -1 & 2& -1 \\ 
 0 & 0 & 0 & -1 & 2\\ 
 \end{array}\right)
-\left(\begin{array}{cc} 
-f(x_{1})+ \frac{\alpha}{\h^2}$\\
--1 \\ 
-\vdots \\
-0 \\ 
-0 \\ 
-\end{array}\right)=
-
 $$
 
+$U_{h}$ est sous la forme :
+
+$$\left(\begin{array}{cc} 
+u_{1} \\ 
+u_{2} \\ 
+\vdots\\
+u_{n-1} \\ 
+u_{n} \\ 
+\end{array}\right)
+$$
+
+$b_{h}$ est sous la forme :
+
+$$\left(\begin{array}{cc} 
+s(x_{1}) + \frac{\alpha}{h²} \\ 
+s(x_{2}) \\ 
+\vdots\\
+s(x_{n-1}) \\ 
+s(x_{n}) + + \frac{\beta}{h²} \\ 
+\end{array}\right)
+$$
 
