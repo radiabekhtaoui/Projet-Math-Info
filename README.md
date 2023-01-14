@@ -17,6 +17,7 @@ Le **makefile** permet d'executer le programe tapez :
 
 
 ### Code en Python :
+Tout le code en python ce trouve sur page jupyter y compris les commentaires et tests .
 ## Methodes numeriques :
 ### Factorisation LU d'une matrice tri-diagonale.
 
